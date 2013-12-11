@@ -32,6 +32,7 @@ function gtmetrix_form($form, &$form_state) {
     '#default_value' => _get_gtmetrix_setting('apikey'),
     '#description' => t('Enter the API Key to login to GTmetrix.'),
     '#required' => TRUE,
+    '#element_validate' => array('_element_alnum_validate'),
   );
   $form['gtmetrix_settings'] = array(
     '#type' => 'fieldset',
@@ -74,7 +75,22 @@ function gtmetrix_form($form, &$form_state) {
  */
 function _element_email_validate($element, &$form_state) {
   if (!valid_email_address($element['#value'])) {
-    form_error($element, t('The @name option must contain a valid email address.', array('@name' => t($element['#title']))));
+    form_error($element, t('The @name option must contain a valid email address.', array('@name' => $element['#title'])));
+  }
+}
+
+/**
+ * Checks whether the given element is alphanumeric only.
+ *
+ * @param array $element
+ *   A structured array containing the elements and properties of the form.
+ * @param array $form_state
+ *   An array that contains information about the form's current state during
+ *  processing
+ */
+function _element_alnum_validate($element, &$form_state) {
+  if (!ctype_alnum($element['#value'])) {
+    form_error($element, t('The @name option must contain letters and numbers only.', array('@name' => $element['#title'])));
   }
 }
 
