@@ -1,22 +1,33 @@
 <?php
 /**
  * @file
- * Tests for the Gtmetrix module
+ * Tests for the GTmetrix module
  */
+class GtmetrixTestCase extends DrupalWebTestCase {
 
-class gtmetrixTestCase extends DrupalWebTestCase {
+  /**
+   * Provides information required by SimpleTest.
+   */
   public static function getinfo() {
     return array(
-      'name' => 'Gtmetrix module functionality',
-      'description' => 'Test hooks in the Gtmetrix module',
-      'group' => 'Gtmetrix',
+      'name' => 'GTmetrix module functionality',
+      'description' => 'Test hooks in the GTmetrix module',
+      'group' => 'GTmetrix',
     );
   }
 
+  /**
+   * Setup environment for testing.
+   *
+   * This is where users and permissions can be setup etc.
+   */
   public function setUp() {
     parent::setUp('gtmetrix');
   }
 
+  /**
+   * Test GTmetrix's permissions.
+   */
   public function testPermission() {
     $data = module_invoke('gtmetrix', 'permission');
 
@@ -24,6 +35,9 @@ class gtmetrixTestCase extends DrupalWebTestCase {
     $this->assertTrue(array_key_exists('access gtmetrix content', $data), t('Permission is as expected'));
   }
 
+  /**
+   * Test GTmetrix's menu items.
+   */
   public function testMenu() {
     $items = module_invoke('gtmetrix', 'menu');
 
@@ -32,13 +46,19 @@ class gtmetrixTestCase extends DrupalWebTestCase {
       $items['gtmetrix']['title'], t('Titles are identical.'));
   }
 
+  /**
+   * Test GTmetrix's block(s).
+   */
   public function testBlockView() {
     $data = module_invoke('gtmetrix', 'block_view', 'gtmetrix');
 
-    $this->assertEqual(t('Gtmetrix'), $data['subject'], t('Subject is as expected.'));
+    $this->assertEqual(t('GTmetrix'), $data['subject'], t('Subject is as expected.'));
     $this->assertNotNull($data['content'], t('Block contains data.'));
   }
 
+  /**
+   * Test GTmetrix's block information.
+   */
   public function testBlockInfo() {
     $info = module_invoke('gtmetrix', 'block_info');
 
@@ -47,6 +67,9 @@ class gtmetrixTestCase extends DrupalWebTestCase {
     $this->assertFalse(count($info) > 1, t('No more than one block defined.'));
   }
 
+  /**
+   * Test GTmetrix's blocks.
+   */
   public function testBlock() {
     $info = module_invoke('gtmetrix', 'block_info');
     $data = module_invoke('gtmetrix', 'block_view', 'gtmetrix');

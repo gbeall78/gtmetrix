@@ -6,4 +6,3 @@ core = 7.x
 ;dependencies[] = module name (major.minor)
 configure = admin/config/development/gtmetrix
 files[] = gtmetrix.test
-
